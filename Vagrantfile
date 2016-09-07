@@ -26,6 +26,8 @@ yum -y localinstall http://yum.puppetlabs.com/puppetlabs-release-pc1-el-6.noarch
 yum -y install puppet
 /opt/puppetlabs/bin/puppet module install puppetlabs-firewall
 /opt/puppetlabs/bin/puppet module install puppetlabs-java
+wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
 /opt/puppetlabs/bin/puppet apply /vagrant/manifests/jenkins.pp --modulepath=/etc/puppetlabs/code/environments/production/modules
 SCRIPT
 
