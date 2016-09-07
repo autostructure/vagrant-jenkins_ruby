@@ -35,22 +35,22 @@ file {'/home/jenkins/.rvmrc':
 } ->
 
 file_line {'Ruby Load':
-  path => '/usr/home/jenkins/.bashrc',
+  path => '/home/jenkins/.bashrc',
   line => '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"',
 } ->
 
 file_line {'Ruby install flag':
-  path => '/usr/home/jenkins/.rvmrc',
+  path => '/home/jenkins/.rvmrc',
   line => 'rvm_install_on_use_flag=1',
 } ->
 
 file_line {'Ruby project flag':
-  path => '/usr/home/jenkins/.rvmrc',
+  path => '/home/jenkins/.rvmrc',
   line => 'rvm_project_rvmrc=1',
 } ->
 
 file_line {'Ruby create flag':
-  path => '/usr/home/jenkins/.rvmrc',
+  path => '/home/jenkins/.rvmrc',
   line => 'rvm_gemset_create_on_use_flag=1',
 } ->
 
