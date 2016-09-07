@@ -14,7 +14,7 @@ Vagrant.configure('2') do |config|
   # boxes at https://atlas.hashicorp.com/search.
 
   config.vm.box_check_update = true
-  config.vm.box = 'puppetlabs/centos-7.2-64-nocm'
+  config.vm.box = 'puppetlabs/centos-7.0-64-nocm'
 
   # /opt/puppetlabs/bin/puppet module install rtyler/jenkins
   #  sudo -Hiu jenkins
@@ -25,6 +25,7 @@ Vagrant.configure('2') do |config|
 yum -y localinstall http://yum.puppetlabs.com/puppetlabs-release-pc1-el-6.noarch.rpm
 yum -y install puppet
 /opt/puppetlabs/bin/puppet module install puppetlabs-firewall
+/opt/puppetlabs/bin/puppet module install puppetlabs-java
 /opt/puppetlabs/bin/puppet apply /vagrant/manifests/jenkins.pp --modulepath=/etc/puppetlabs/code/environments/production/modules
 SCRIPT
 
