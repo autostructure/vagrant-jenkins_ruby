@@ -14,11 +14,11 @@ package { 'rubygems':
   ensure => present,
 }
 
-$gem_packages = ['puppet-lint', 'rubocop']
+# $gem_packages = ['puppet-lint', 'rubocop']
 
-package { $gem_packages:
-  provider => 'gem',
-}
+#package { $gem_packages:
+#  provider => 'gem',
+#}
 
 # user {'jenkins':
 #  shell => '/bin/bash',
