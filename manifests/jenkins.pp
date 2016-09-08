@@ -2,80 +2,69 @@ class { '::firewall':
   ensure => stopped,
 }
 
-$ruby_packages =
-  [ 'curl',
-    'bison',
-    'git-core',
-    'libyaml-devel',
-    'autoconf',
-    'gcc-c++',
-    'readline-devel',
-    'zlib-devel',
-    'libffi-devel',
-    'openssl-devel',
-    'automake',
-    'libtool',
-    'sqlite-devel',
-  ]
+package {'java-1.7.0-openjdk-devel':
+  ensure => absent,
+}
 
-package {$ruby_packages:
+class { '::java' :
+  package => 'java-1.8.0-openjdk-devel',
+}
+
+package { 'rubygems':
   ensure => present,
 }
 
-# include ::jenkins
+$gem_packages = ['puppet-lint', 'rubocop']
 
-# :jenkins::plugin { 'ruby': }
-
-class {'::java': }
-
-user {'jenkins':
-  home  => '/home/jenkins',
-  shell => '/bin/bash',
+package { $gem_packages:
+  provider => 'gem',
 }
 
-file {'/home/jenkins':
-  ensure => directory,
-  owner  => 'jenkins',
-}
+# user {'jenkins':
+#  shell => '/bin/bash',
+# }
 
-file {'/home/jenkins/.bashrc':
-  ensure => file,
-  owner  => 'jenkins',
-}
+# file {'/home/jenkins':
+#   ensure => directory,
+#   owner  => 'jenkins',
+# }
 
-file {'/home/jenkins/.rvmrc':
-  ensure => file,
-  owner  => 'jenkins',
-}
-
-file_line {'Ruby Load':
-  path => '/home/jenkins/.bashrc',
-  line => '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"',
-}
-
-file_line {'Ruby install flag':
-  path => '/home/jenkins/.rvmrc',
-  line => 'rvm_install_on_use_flag=1',
-}
-
-file_line {'Ruby project flag':
-  path => '/home/jenkins/.rvmrc',
-  line => 'rvm_project_rvmrc=1',
-}
-
-file_line {'Ruby create flag':
-  path => '/home/jenkins/.rvmrc',
-  line => 'rvm_gemset_create_on_use_flag=1',
-}
-
-package {'jenkins': }
-
-#include ::rvm
-
-#rvm::system_user { 'jenkins': }
-
-#rvm_system_ruby {
-#  'ruby-2.1':
-#    ensure      => 'present',
-#    default_use => true,
+#file {'/home/jenkins/.bashrc':
+#  ensure => file,
+#  owner  => 'jenkins',
 #}
+
+# file {'/home/jenkins/.rvmrc':
+#   ensure => file,
+#   owner  => 'jenkins',
+# }
+
+# file_line {'Ruby Load':
+#   path => '/etc/profile',
+#   line => '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"',
+# }
+
+# file_line {'Ruby install flag':
+#   path => '/home/jenkins/.rvmrc',
+#   line => 'rvm_install_on_use_flag=1',
+# }
+
+# file_line {'Ruby project flag':
+#   path => '/home/jenkins/.rvmrc',
+#   line => 'rvm_project_rvmrc=1',
+# }
+
+# file_line {'Ruby create flag':
+#   path => '/home/jenkins/.rvmrc',
+#   line => 'rvm_gemset_create_on_use_flag=1',
+# }
+
+include ::rvm
+
+::rvm::system_user { 'jenkins': }
+
+rvm_system_ruby {
+  'ruby-2.1':
+    ensure      => 'present',
+    default_use => true,
+}

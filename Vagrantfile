@@ -19,15 +19,19 @@ Vagrant.configure('2') do |config|
   # /opt/puppetlabs/bin/puppet module install rtyler/jenkins
   #  sudo -Hiu jenkins
   #  gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-  #  curl -sSL https://get.rvm.io | bash -s stable --ruby
+  # curl -sSL https://get.rvm.io | sudo bash -s stable
+  # /usr/local/rvm/bin/rvm install 2.1
+  # /usr/local/rvm/bin/rvm use --default 2.1
 
   install_puppet_script = <<SCRIPT
-yum -y localinstall http://yum.puppetlabs.com/puppetlabs-release-pc1-el-6.noarch.rpm
+yum -y localinstall http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
 yum -y install puppet
 /opt/puppetlabs/bin/puppet module install puppetlabs-firewall
 /opt/puppetlabs/bin/puppet module install puppetlabs-java
+/opt/puppetlabs/bin/puppet module install maestrodev/rvm
 wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
 rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+yum -y install jenkins
 /opt/puppetlabs/bin/puppet apply /vagrant/manifests/jenkins.pp --modulepath=/etc/puppetlabs/code/environments/production/modules
 SCRIPT
 
