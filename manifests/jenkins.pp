@@ -16,7 +16,7 @@ package { 'rubygems':
 
 
 package { 'git': 
-  ensure => present 
+  ensure => present, 
 }
 
 # $gem_packages = ['puppet-lint', 'rubocop']
