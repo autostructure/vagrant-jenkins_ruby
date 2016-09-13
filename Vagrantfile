@@ -13,6 +13,9 @@ Vagrant.configure('2') do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
 
+  # Adding public_network (bridged) as a test for Sumit
+  config.vm.network 'public_network'
+
   config.vm.box_check_update = true
   config.vm.box = 'puppetlabs/centos-7.0-64-nocm'
 
